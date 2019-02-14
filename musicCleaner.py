@@ -1,6 +1,16 @@
 import os
 from shutil import copyfile
+import argparse
 import mutagen
+
+# Arguments
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--input', type=str, required=True, 
+   help='Folder containing songs to clean (Will be done recursively)')
+
+parser.add_argument('--output', type=str, required=True,
+    help='Folder where the cleaned files should be stored')
 
 def readDir(musicFolderPath):
     audioFiles = []
@@ -77,8 +87,9 @@ def writeFiles(audioFiles, outputDir):
 
 
 if __name__ == "__main__":
-    inputDir = '/home/j3romee/Music/Unsorted'
-    outputDir = '/home/j3romee/Music/Sorted'
+    args = parser.parse_args()
+    inputDir = args.input 
+    outputDir = args.output
 
     print(">>> Reading MP3 files in '%s'" % inputDir)
     audioFiles = readDir(inputDir)
